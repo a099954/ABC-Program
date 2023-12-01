@@ -19,14 +19,15 @@ We will restore the database in SSMS by restoring this backup file. The term "re
 ### Restoration Steps:
 
 1. Open SSMS and connect to your localhost
+   1. use **(localdb)\MSSQLLocalDB** as the connection string
 2. In the Object Explorer pane, right-click on *Databases*
 3. Select *Restore Database*
-3. Under the Source section, select *Device* and click the ellipsis (...)
-4. This will bring up the Select backup device window with the backup media type defaulted to "File" (which is what we want as we are restoring from a file)
-5. Click the Add button, which brings up the Locate Backup File window
-6. Navigate to the root of your C: drive and select your backup file
-7. Click OK
-8. In the Select backup device window, click OK
+4. Under the Source section, select *Device* and click the ellipsis (...)
+5. This will bring up the Select backup device window with the backup media type defaulted to "File" (which is what we want as we are restoring from a file)
+6. Click the Add button, which brings up the Locate Backup File window
+7. Navigate to the root of your C: drive and select your backup file
+8. Click OK
+9.  In the Select backup device window, click OK
 
 Note: This should result in a *Restore Database - WideWorldImporters* window that looks like this:
 ![ssms-restore-db](assets/images/restore-db-window.png)
