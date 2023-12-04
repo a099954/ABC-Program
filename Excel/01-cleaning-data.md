@@ -148,9 +148,6 @@ If you do this, the OSMI survey lights up, and most records are highlighted.
 
 The question then should be, "Why are all of my data points coming up as duplicates?" In this particular example, the OSMI survey data includes questions and answers, though it doesn't have a unique identifier for a survey response. If we choose to remove duplicate data in this case, we could lose survey responses and observations on the mental health in tech.
 
-## Transforming Data
-Transforming data within Excel can also be done with Power Query. If you move data from one source to another, the two sources rarely line up nicely. Even if your data is structured and stored in an organized system, there are still possibilities that the format from the source system will not line up with the format for the destination system. When working with data, you may need to change it to particular formats and subsets of data before working with it for further analysis and visualizations. We will not go into the details of transforming data in this course, but if you want to learn more, you can find documentation through Microsoft.
-
 ## Conclusion
 
 In this lesson, we explored removing duplicates, removing blank rows, removing errors, replacing errors, and identifying duplicates after loading data. These are just some of the many steps provided in Power Query.

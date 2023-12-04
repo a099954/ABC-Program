@@ -99,12 +99,6 @@ Going through a data mapping exercise will create the outline of steps to build 
 
 Once the data is cleaned and transformed, the last part of ETL is the L - loading the data into the destination system. How does that happen? It depends on the system. Some systems have a way to import data through an admin interface. Some may need data pushed to their back end via an API - this is done typically in programming. Some may have database systems that they use that allow us to use other tools for loading - such as the SQL Server Import/Export Data tool. Depending on the system, you may need to go back to the vendor to see how to import data into their system.
 
-## Automating ETL in Excel
-
-![Power Query editor](assets/images/powerqueryeditor-transform-loadsubset-sensors.png)
-
-During the Get & Transform process in Excel, transformations are stored in steps and translated to a language known as <a href="https://docs.microsoft.com/en-us/powerquery-m/">Power Query M formula language</a>. This language is used in Excel, Power BI, and SQL Server Analysis Services. These queries can be edited through an Advanced Editor in Excel, though most of the things you need to do can be accessed through buttons along the ribbons in the Power Query Editor. Power Query M queries can be saved in ODC (Office Database Connection) files, which makes it easy to reuse the script for things such as processes with daily file updates.
-
 ## Conclusion
 
 Excel is more than just a spreadsheet application. It allows for workbooks of spreadsheets to be created, maintained, and shared. A data analyst can use Excel for cleaning data, transforming data, and importing data. In this lesson, we laid out a high level overview of Excel and how it can be used in the extract-transform-load (ETL) process. In the next lessons, you will be using Get & Transform to do some ETL in Excel.
