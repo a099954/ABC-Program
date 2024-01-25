@@ -9,6 +9,7 @@ USE AdventureWorks2012;
 /* Product Tables Exercises - Columns & Rows  */
 
 -- Question 1) How many columns does the Production.Product table have?  
+-- take 3 minutes to answer
 
 
 
