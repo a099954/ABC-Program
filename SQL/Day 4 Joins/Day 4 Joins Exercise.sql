@@ -4,6 +4,7 @@
 USE AdventureWorks2012;
 
 
+-- For this exercise, we are using the production tables.
 
 
 

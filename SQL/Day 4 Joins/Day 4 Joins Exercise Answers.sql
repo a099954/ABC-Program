@@ -2,8 +2,7 @@
 
 -- Connect to the AdventureWorks2012 database
 USE AdventureWorks2012;
-
-
+-- For this exercise, we are using the production tables.
 
 
 
@@ -14,6 +13,7 @@ USE AdventureWorks2012;
 
 -- Step 1) Join Product table (p) to the ProductInventory table (inv)
 -- and return p.Name AS Product, inv.Shelf AS InventoryShelf, and inv.ModifiedDate AS SnapshotDate
+-- This INNER JOIN combines product and inventory data to track the shelf locations of the "Bearing Ball" product over time.
 
         SELECT p.Name AS Product, 
         inv.Shelf AS InventoryShelf,
@@ -23,6 +23,7 @@ USE AdventureWorks2012;
           ON p.ProductID = inv.ProductID;
 
 -- Step 2) Filter the results using p.Name = 'Bearing Ball'
+-- This step filters the previous result to focus on the "Bearing Ball" product.
 
         SELECT p.Name AS Product, 
         inv.Shelf AS InventoryShelf,
@@ -37,6 +38,7 @@ USE AdventureWorks2012;
 
 -- Step 1) Join Product table (p) to the ProductCostHistory table (pch)
 -- and return p.Name AS Product, pch.StartDate, and pch.StandardCost
+-- This INNER JOIN connects product and cost history data to track standard costs over time for high-end road bike models.
 
         SELECT p.Name AS Product, 
         pch.StartDate, 
@@ -47,6 +49,7 @@ USE AdventureWorks2012;
 
 
 -- Step 2) Filter p.Name using LIKE '%Road-%'
+-- This step filters the previous result to focus on high-end road bike models.
 
         SELECT p.Name AS Product, 
         pch.StartDate, 
@@ -57,7 +60,8 @@ USE AdventureWorks2012;
         WHERE p.Name LIKE '%Road-%';
 
 
---Step 3) Order the results by Cost Date
+-- Step 3) Order the results by Cost Date
+-- This step orders the previous result by cost date to show the cost history.
 
         SELECT p.Name AS Product,
         pch.StartDate,
@@ -75,6 +79,7 @@ USE AdventureWorks2012;
 
 -- Step 1) Join the Product table (p) to the ProductInventory table (inv)
 -- and return p.Name AS (Product)
+-- This LEFT JOIN combines product and inventory data to identify products with no current inventory quantity on hand.
 
         SELECT p.Name AS Product, 
         inv.Quantity AS OnHandQty  
@@ -82,7 +87,8 @@ USE AdventureWorks2012;
         LEFT JOIN Production.ProductInventory inv
           ON p.ProductID = inv.ProductID;
 
--- Step 2) check for Missing Snapshot by filtering out NULL on ProductID
+-- Step 2) Check for Missing Snapshot by filtering out NULL on ProductID
+-- This step identifies products with no inventory records by checking for NULL values in the ProductID column.
 
         SELECT p.Name AS Product   
         FROM Production.Product p
@@ -91,6 +97,7 @@ USE AdventureWorks2012;
         WHERE inv.ProductID IS NULL;
 
 -- Step 3) Order Results
+-- This step orders the previous result alphabetically to list products with no inventory.
 
         SELECT p.Name AS Product  
         FROM Production.Product p
@@ -107,6 +114,7 @@ USE AdventureWorks2012;
 
 -- Step 1) Join the Product table (p) to the ProductInventory table (inv)
 -- and return the p.Name AS (Product) and inv.LocationID AS InventoryLocationID
+-- This INNER JOIN combines product and inventory data to identify products with the highest inventory quantities over time.
 
         SELECT p.Name AS Product, 
         inv.LocationID AS InventoryLocationID
@@ -116,6 +124,7 @@ USE AdventureWorks2012;
 
 -- Step 2) Add an Aggregate by taking the SUM of inv.Quantity
 -- and group by p.Name
+-- This step calculates the total inventory quantities for each product by taking the SUM and grouping by product name.
 
         SELECT p.Name AS Product,
         SUM(inv.Quantity) AS TotalQuantity  
@@ -125,6 +134,7 @@ USE AdventureWorks2012;
         GROUP BY p.Name;
 
 -- Step 3) Order the results by TotalQuantity 
+-- This step orders the previous result by total quantity to show products with the highest inventory quantities.
 
     SELECT p.Name AS Product,
     SUM(inv.Quantity) AS TotalQuantity
