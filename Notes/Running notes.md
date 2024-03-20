@@ -14,3 +14,9 @@
 1.  For RACE Servers
 2.  Creating a DB
 3.  PowerQuery
+
+
+## Math and Stats
+
+1. Add SumProduct to excel week
+2. 
