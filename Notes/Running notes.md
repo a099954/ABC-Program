@@ -19,4 +19,13 @@
 ## Math and Stats
 
 1. Add SumProduct to excel week
-2. 
+
+
+## Excel assignment and Math assignment
+1.  Maybe to similar
+2.  
+
+
+
+# . continue with dataset that was created
+
