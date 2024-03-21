@@ -23,9 +23,4 @@
 
 ## Excel assignment and Math assignment
 1.  Maybe to similar
-2.  
-
-
-
-# . continue with dataset that was created
-
+2.  Erik liked working with the messy dataset query
