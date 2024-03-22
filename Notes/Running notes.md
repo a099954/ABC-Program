@@ -19,6 +19,13 @@
 ## Math and Stats
 
 1. Add SumProduct to excel week
+2. they liked having the answers to refer back to
+3. copy and paste the pivot table values into another cell
+4. expand on ratios
+   1. working both forward and backwards from the ratio
+      1. working forward a/b
+      2. working backwards (a/b)*a
+   
 
 
 ## Excel assignment and Math assignment
