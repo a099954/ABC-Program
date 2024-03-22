@@ -32,3 +32,7 @@
 1.  Maybe to similar
 2.  Erik liked working with the messy dataset query
 3.  maybe work in concepts for math in the math assignment and move the assignment now back to excel week.
+4.  
+## SQL Week 2
+1.  Maybe flip joins and aggregates.  
+    1.  Might work better.
