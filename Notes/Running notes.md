@@ -8,6 +8,7 @@
 1. changing the order of Self-Doubt and Growth Mindset or combining them
 2. Week 1 THursday they were gassed.  Could we have them watch a video and discuss it?
 3. Thinking about adding in Time Management - utilize it with GitHub
+4. Maybe flip mindfulness and why ask why
 
 ## Creating Job Aids
 
