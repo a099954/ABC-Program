@@ -26,14 +26,14 @@
    1. working both forward and backwards from the ratio
       1. working forward a/b
       2. working backwards (a/b)*a
-   
 
 
 ## Excel assignment and Math assignment
 1.  Maybe to similar
 2.  Erik liked working with the messy dataset query
 3.  maybe work in concepts for math in the math assignment and move the assignment now back to excel week.
-4. Math and Stats is about comparisons and A/b testing 
+4. Math and Stats is about comparisons and A/b testing.
+5. box and whisker.
 ## SQL Week 2
-1.  Maybe flip joins and aggregates.  
+1.  Maybe flip joins and aggregates.
     1.  Might work better.
