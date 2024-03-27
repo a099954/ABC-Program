@@ -37,3 +37,10 @@
 ## SQL Week 2
 1.  Maybe flip joins and aggregates.
     1.  Might work better.
+
+
+## SQl Weeks
+1.  move SQL Island to week 1 SQL
+2.  Lost at SQL might be better fit
+3.  Maybe update tables?
+4.  maybe move aggregates to week 2 of sql
