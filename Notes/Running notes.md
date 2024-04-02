@@ -44,3 +44,9 @@
 2.  Lost at SQL might be better fit
 3.  Maybe update tables?
 4.  maybe move aggregates to week 2 of sql
+5.  add moving average to stats sql script
+
+
+## writing for purpose and understanding
+1.  Look at your analytic report and rewrite it
+2.  
