@@ -49,4 +49,11 @@
 
 ## writing for purpose and understanding
 1.  Look at your analytic report and rewrite it
-2.  
+
+
+## for next year
+1. incorporate github
+
+
+## Business Accumen
+1.  SPC tool instead of A/B Testing
