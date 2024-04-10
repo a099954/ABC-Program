@@ -45,6 +45,7 @@
 3.  Maybe update tables?
 4.  maybe move aggregates to week 2 of sql
 5.  add moving average to stats sql script
+6.  explain cast
 
 
 ## writing for purpose and understanding
