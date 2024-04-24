@@ -58,3 +58,7 @@
 
 ## Business Accumen
 1.  SPC tool instead of A/B Testing
+2.  
+## SSIS
+1. start visual studios
+2. search for integration services project
