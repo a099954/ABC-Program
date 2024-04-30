@@ -62,3 +62,8 @@
 ## SSIS
 1. start visual studios
 2. search for integration services project
+
+
+## Proejects
+1. more time for the dashboard
+2. 
