@@ -66,4 +66,8 @@
 
 ## Proejects
 1. more time for the dashboard
-2. 
+
+
+## Data Governance Presentation
+1. Move it up earlier in the schedule
+   1. went over DIG at length
