@@ -72,5 +72,12 @@
 1. Move it up earlier in the schedule
    1. went over DIG at length
 
+
 ## Presenter for next year
 1.  Talk to Joanna Carrier about her vision project - from Casey and Steph on brand
+
+
+## email the report at the end and the presentation
+
+## Brightspace updates
+use it for presentation review
