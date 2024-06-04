@@ -77,7 +77,13 @@
 1.  Talk to Joanna Carrier about her vision project - from Casey and Steph on brand
 
 
-## email the report at the end and the presentation
+## Graduation Day
+1.  buy a cap
+2.  see if we can order caps for everyone
 
 ## Brightspace updates
 use it for presentation review
+
+## APG Presentation
+1.  maybe remove it.  They had it first day of IAT orientation
+2.  
