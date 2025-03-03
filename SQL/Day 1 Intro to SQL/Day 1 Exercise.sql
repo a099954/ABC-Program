@@ -33,7 +33,7 @@ USE AdventureWorks2012;
 
 
 
--- Question 3) Select the distinct product categories ordering alphabetically
+-- Question 3) Select the distinct ProductSubcategoryID sorted small to large
 
 
 

@@ -69,12 +69,13 @@ FROM Production.Product;
    - This query retrieves unique product names, eliminating any duplicate entries.
 */
 
--- Question 3) Select the distinct product categories ordering alphabetically
+-- Question 3) Select the distinct ProductSubcategoryID sorted small to large
 
 -- Query:
 SELECT DISTINCT ProductSubcategoryID, Name
 FROM Production.Product
 ORDER BY ProductSubcategoryID;
+
 
 /*
    Answer: 
