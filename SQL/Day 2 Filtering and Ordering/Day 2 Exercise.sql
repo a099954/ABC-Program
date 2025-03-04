@@ -30,7 +30,7 @@ USE AdventureWorks2012;
 -- Question 2) Update the query to search for either 'racing' or 'touring' products
 
 
--- Question 3) Add a NOT LIKE filter to leave out any product names containing 'children’
+-- Question 3) Add a NOT LIKE filter to leave out any product names containing 'frame’
 
 
 

@@ -45,11 +45,11 @@ WHERE Name LIKE '%racing%' OR Name LIKE '%touring%';
 -- This query expands the search to include both 'racing' and 'touring' products.
 -- It's useful for broadening the scope of the search.
 
--- Question 3) Add a NOT LIKE filter to leave out any product names containing 'children’
+-- Question 3) Add a NOT LIKE filter to leave out any product names containing 'frame’
 SELECT * 
 FROM Production.Product 
 WHERE (Name LIKE '%racing%' OR Name LIKE '%touring%') 
-AND Name NOT LIKE '%children%';
+AND Name NOT LIKE '%frame%';
 -- This query excludes products with 'children' in their name.
 -- It's beneficial for refining the search to exclude certain types of products.
 
