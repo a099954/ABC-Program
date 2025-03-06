@@ -25,10 +25,10 @@ USE AdventureWorks2012;
 
 
 -- Question 1) Group products by size and return the total for each ProductID (as ProductCount) per size
--- Hint use Count(ProductID)
+-- Hint use Count(*)
 
 
--- Question 2) Update the previous query to order the groups by ProductCount in descending order
+-- Question 2) Update the previous query to ORDER the groups by ProductCount in descending order
 
 
 -- Question 3) Modify the query to only return the top 3 sizes by ProductCount

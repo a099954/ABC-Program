@@ -69,7 +69,7 @@ ORDER BY ListPrice DESC;
 -- This query orders products by descending ListPrice, showing the most expensive first.
 -- It's useful for finding the most costly items in the product list.
 
--- Question 3) Add a secondary sort to order by Name within price groups
+-- Question 3) Add a secondary sort to order by Name within list price
 SELECT * 
 FROM Production.Product 
 ORDER BY ListPrice DESC, Name;

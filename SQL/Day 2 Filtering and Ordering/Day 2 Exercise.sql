@@ -44,5 +44,5 @@ USE AdventureWorks2012;
 -- Question 2) ORDER products by  descending ListPrice, ie. most expensive first
 
 
--- Question 3) Add a secondary sort to order Name within price groups
+-- Question 3) Add a secondary sort to order Name within List Prices
 
