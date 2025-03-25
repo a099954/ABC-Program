@@ -3,120 +3,119 @@
 -- Connect to the AdventureWorks2012 database
 USE AdventureWorks2012;
 
+-- Step 1: Examine the Tables
 
+-- Explanation Before:
+-- Before diving into joins, it's essential to understand the data you're working with.
+-- We'll start by counting the number of records in each table to get a sense of the dataset size.
 
+-- Count the number of products
+SELECT COUNT(*) AS ProductCount
+FROM Production.Product;
 
-/* SIMPLE INNER JOINS */
+-- Count the number of inventory records
+SELECT COUNT(*) AS InventoryCount
+FROM Production.ProductInventory;
 
--- Join products and subcategories
--- This INNER JOIN combines products and their subcategories, ensuring that only matching records are included.
--- It's useful for retrieving information about products and their corresponding subcategories.
-SELECT *
-FROM Production.Product p 
-INNER JOIN Production.ProductSubcategory ps 
-  ON p.ProductSubcategoryID = ps.ProductSubcategoryID;
+-- Explanation After:
+-- Compare the counts from both tables. This gives you an idea of how many products exist
+-- and how many inventory records are available. If the product count is significantly higher
+-- than the inventory count, expect many products without inventory records.
 
--- Join product and product model
--- This INNER JOIN connects products to their associated product models.
--- It's valuable for obtaining a unified view of products and their corresponding models.
-SELECT *
-FROM Production.ProductModel pm 
-INNER JOIN Production.Product p 
-  ON p.ProductModelID = pm.ProductModelID;
+-- Step 2: Use LEFT JOIN to Retrieve All Products and Their Inventory Details
 
+-- Explanation Before:
+-- A LEFT JOIN will include all records from the left table (Production.Product),
+-- along with matched records from the right table (Production.ProductInventory).
+-- Unmatched records will have NULL values for columns from the right table.
 
+-- Retrieve all products with their inventory details
+SELECT 
+    p.ProductID, 
+    p.Name, 
+    pi.LocationID, 
+    pi.Quantity
+FROM 
+    Production.Product p
+LEFT JOIN 
+    Production.ProductInventory pi ON p.ProductID = pi.ProductID;
 
+-- Explanation After:
+-- Look at the results and note the rows where LocationID and Quantity are NULL.
+-- These represent products without inventory records. Compare the number of rows returned
+-- here with the product count from Step 1 to ensure all products are included.
 
-/* SIMPLE LEFT JOINS */
+-- Step 3: Filter Products with Inventory Using IS NOT NULL
 
--- Get all products with their product model name
--- This LEFT JOIN retrieves all products along with their respective product model names.
--- It's helpful for displaying product details, even if some products have no associated models.
-SELECT p.Name, pm.Name AS ModelName 
-FROM Production.Product p 
-LEFT JOIN Production.ProductModel pm 
-  ON p.ProductModelID = pm.ProductModelID;
+-- Explanation Before:
+-- By filtering with IS NOT NULL, we can exclude products that don't have inventory records,
+-- effectively simulating an INNER JOIN.
 
--- Get all inventory snapshots with product name
--- This LEFT JOIN combines product information with inventory snapshots.
--- It's useful for seeing product names alongside their inventory data, even when some products have no inventory records.
-SELECT p.Name, pi.Shelf, pi.Quantity
-FROM Production.Product p 
-LEFT JOIN Production.ProductInventory pi 
-  ON p.ProductID = pi.ProductID;
+-- Retrieve products that have inventory records
+SELECT 
+    p.ProductID, 
+    p.Name, 
+    pi.LocationID, 
+    pi.Quantity
+FROM 
+    Production.Product p
+LEFT JOIN 
+    Production.ProductInventory pi ON p.ProductID = pi.ProductID
+WHERE 
+    pi.ProductID IS NOT NULL;
 
+-- Explanation After:
+-- Compare the results with Step 2. Notice that rows with NULL values for inventory details
+-- are excluded. The number of rows should match the inventory count from Step 1,
+-- showing only products with inventory records.
 
+-- Step 4: Use INNER JOIN for Direct Comparison
 
+-- Explanation Before:
+-- An INNER JOIN directly retrieves records with matches in both tables.
+-- This should yield the same results as Step 3.
 
-/* SIMPLE RIGHT JOINS */
+-- Retrieve products with inventory using INNER JOIN
+SELECT 
+    p.ProductID, 
+    p.Name, 
+    pi.LocationID, 
+    pi.Quantity
+FROM 
+    Production.Product p
+INNER JOIN 
+    Production.ProductInventory pi ON p.ProductID = pi.ProductID;
 
+-- Explanation After:
+-- Compare these results with Step 3. They should be identical, confirming that filtering
+-- with IS NOT NULL on a LEFT JOIN can achieve the same outcome as an INNER JOIN.
 
--- Get all product models with any matching products
--- This RIGHT JOIN retrieves all product models and includes any associated products.
--- It's beneficial when you want to ensure that all product models are included, even if some have no corresponding products.
-SELECT p.Name, pm.Name AS ModelName 
-FROM Production.Product p 
-RIGHT JOIN Production.ProductModel pm 
-  ON p.ProductModelID = pm.ProductModelID;
+-- Step 5: Demonstrate FULL JOIN for Completeness
 
--- Get all product inventory snapshots with product info
--- This RIGHT JOIN combines product data with inventory snapshots.
--- It's helpful for viewing inventory details alongside product information, ensuring that all snapshots are included.
-SELECT p.Name, pi.Shelf, pi.Quantity 
-FROM Production.Product p 
-RIGHT JOIN Production.ProductInventory pi 
-  ON p.ProductID = pi.ProductID;
+-- Explanation Before:
+-- A FULL JOIN returns all records from both tables, including unmatched records from both sides.
+-- This provides a complete view of all possible combinations.
 
+-- Retrieve all possible combinations of products and inventory records
+SELECT 
+    p.ProductID, 
+    p.Name, 
+    pi.LocationID, 
+    pi.Quantity
+FROM 
+    Production.Product p
+FULL JOIN 
+    Production.ProductInventory pi ON p.ProductID = pi.ProductID;
 
+-- Explanation After:
+-- Examine the results to see products without inventory and inventory records without products.
+-- Compare this with the previous steps to understand how FULL JOIN differs by including unmatched
+-- records from both tables.
 
-/* FULL OUTER JOINS */
-
--- Get all products and product models with matches and non-matches
--- This FULL OUTER JOIN combines products and product models, including both matching and non-matching records.
--- It's useful when you want to create a comprehensive list of products and their corresponding models, including those with no matches.
-SELECT p.Name, pm.Name AS ModelName
-FROM Production.Product p 
-FULL OUTER JOIN Production.ProductModel pm 
-  ON p.ProductModelID = pm.ProductModelID;
-
--- Get inventory snapshots combined with all products, even those lacking snapshots
--- This FULL OUTER JOIN combines product information with inventory snapshots, ensuring that all products are included, whether they have snapshots or not.
-SELECT p.Name, pi.Shelf, pi.Quantity 
-FROM Production.Product p
-FULL OUTER JOIN Production.ProductInventory pi 
-  ON p.ProductID = pi.ProductID;
-
-
-
-
-/* JOINS with Aggregates */
-
--- Average reseller sales amount per year:
--- This INNER JOIN aggregates sales data by year and calculates the average sales amount for each year.
--- It's useful for understanding the yearly sales performance.
-SELECT YEAR(sh.OrderDate) AS OrderYear, AVG(sd.LineTotal) AS AverageSales
-FROM Sales.SalesOrderHeader sh 
-INNER JOIN Sales.SalesOrderDetail sd
-  ON sh.SalesOrderID = sd.SalesOrderID 
-GROUP BY YEAR(sh.OrderDate);
-
--- How many times has each product been ordered?
--- This INNER JOIN aggregates data to count how many times each product has been ordered.
--- It's helpful for assessing product popularity based on order counts.
-SELECT p.Name as Product, COUNT(sod.SalesOrderDetailID) AS OrderCount
-FROM Production.Product as p
-INNER JOIN Sales.SalesOrderDetail AS sod
-  ON sod.ProductID = p.ProductID
-GROUP BY p.Name
-
--- Total historical on-hand inventory quantities for each product
--- This JOIN aggregates data to calculate the total historical on-hand inventory quantities for each product.
--- It's useful for inventory management and understanding product stock levels.
-SELECT p.Name AS Product, SUM(inv.Quantity) AS TotalQuantity  
-FROM Production.Product p
-JOIN Production.ProductInventory inv
-  ON p.ProductID = inv.ProductID
-GROUP BY p.Name
-ORDER BY TotalQuantity DESC
-
-
+-- How to Compare and Contrast:
+-- 1. Row Counts: Compare the number of rows returned by each query. This helps you understand
+--    the impact of each join type and filter.
+-- 2. Column Values: Focus on LocationID and Quantity to identify unmatched records.
+--    NULL values indicate no match in the right table.
+-- 3. Data Completeness: Use FULL JOIN to see all possible combinations, which can highlight
+--    gaps in data matching.
