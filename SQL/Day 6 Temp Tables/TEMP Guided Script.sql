@@ -21,7 +21,7 @@ FROM #FilteredProducts;
 SELECT fp.*
 INTO #NonOutlierProducts
 FROM #FilteredProducts fp
-INNER JOIN #PriceStats ps
+LEFT JOIN #PriceStats ps
 ON fp.ListPrice <= ps.AvgPrice + 3 * ps.StdDev;
 
 -- Step 4: Creating Intermediate Results
@@ -43,7 +43,7 @@ GROUP BY p2.ProductSubcategoryID;
 SELECT alp.ProductSubcategoryID, alp.AvgListPrice, spc.ProductCount
 INTO #CombinedResults
 FROM #AvgListPriceBySubcategory alp
-INNER JOIN #SubcategoryProductCount spc
+LEFT JOIN #SubcategoryProductCount spc
 ON alp.ProductSubcategoryID = spc.ProductSubcategoryID;
 
 -- Step 7: Additional Statistics
