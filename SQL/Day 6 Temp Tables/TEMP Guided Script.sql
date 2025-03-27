@@ -2,6 +2,7 @@
 USE AdventureWorks2012;
 
 -- Step 1: Data Extraction and Initial Filtering
+-- Extract products with a list price greater than 100 and non-null values for ListPrice and Color
 SELECT *
 INTO #FilteredProducts
 FROM Production.Product
@@ -9,103 +10,96 @@ WHERE ListPrice > 100
       AND ListPrice IS NOT NULL
       AND Color IS NOT NULL;
 
--- Look at results
-SELECT *
-FROM #FilteredProducts;
+-- Display the filtered products
+SELECT * FROM #FilteredProducts;
 
--- Step: Remove Duplicates
+-- Step 2: Remove Duplicates
+-- Create a temporary table with distinct products to eliminate duplicates
 SELECT DISTINCT *
 INTO #UniqueFilteredProducts
 FROM #FilteredProducts;
 
--- Look at results
-SELECT *
-FROM #UniqueFilteredProducts;
+-- Display the unique filtered products
+SELECT * FROM #UniqueFilteredProducts;
 
--- Step 2: Basic Statistics
--- Explanation: Calculate average, standard deviation, and mode of list prices to understand central tendency.
-
--- Calculate average and standard deviation
+-- Step 3: Basic Statistics
+-- Calculate average and standard deviation of list prices to understand central tendency
 SELECT 
     AVG(ListPrice) AS AvgPrice, 
     STDEV(ListPrice) AS StdDev
 INTO #PriceStats
 FROM #UniqueFilteredProducts;
 
--- Look at results
-SELECT *
+-- Display the calculated average and standard deviation
+SELECT * FROM #PriceStats;
+
+-- Step 4: Calculate Standard Deviations
+-- Calculate the values for 1, 2, and 3 standard deviations above and below the average
+SELECT 
+    AvgPrice - 3 * StdDev AS Minus3StdDev,
+    AvgPrice - 2 * StdDev AS Minus2StdDev,
+    AvgPrice - 1 * StdDev AS Minus1StdDev,
+    AvgPrice AS AvgPrice,
+    AvgPrice + 1 * StdDev AS Plus1StdDev,
+    AvgPrice + 2 * StdDev AS Plus2StdDev,
+    AvgPrice + 3 * StdDev AS Plus3StdDev
+INTO #DeviationRanges
 FROM #PriceStats;
 
--- Calculate mode
-SELECT TOP 1 ListPrice AS ModePrice
-INTO #ModePrice
-FROM #UniqueFilteredProducts
-GROUP BY ListPrice
-ORDER BY COUNT(*) DESC;
+-- Display the deviation ranges
+SELECT * FROM #DeviationRanges;
 
--- Look at results
-SELECT *
-FROM #ModePrice;
-
--- Step 3: Outlier Identification
--- Explanation: Identify outliers by checking products that fall outside the typical range defined by standard deviation.
-
--- Find the outliers on tail 1 (above the upper threshold)
+-- Step 5: Identify Products within Acceptable Range
+-- Create a temporary table for products within tail 1 (up to 2 standard deviations above average)
 SELECT fp.*
+INTO #Tail1Products
 FROM #UniqueFilteredProducts fp
-INNER JOIN #PriceStats ps
-  ON fp.ListPrice >= ps.AvgPrice + 2 * ps.StdDev;
+INNER JOIN #DeviationRanges dr
+  ON fp.ListPrice <= dr.Plus2StdDev;
 
--- Find the outliers on tail 2 (below the lower threshold)
+-- Create a temporary table for products within tail 2 (at least 1 standard deviation below average)
 SELECT fp.*
+INTO #Tail2Products
 FROM #UniqueFilteredProducts fp
-INNER JOIN #PriceStats ps
-  ON fp.ListPrice <= ps.AvgPrice - 1 * ps.StdDev;
+INNER JOIN #DeviationRanges dr
+  ON fp.ListPrice >= dr.Minus1StdDev;
 
--- Explanation: Now, identify products that are within the acceptable range.
--- This includes products that are not outliers on either tail.
-
--- Data to include tail 1
-SELECT fp.*
-FROM #UniqueFilteredProducts fp
-INNER JOIN #PriceStats ps
-  ON fp.ListPrice <= ps.AvgPrice + 2 * ps.StdDev;
-
--- Data to include tail 2
-SELECT fp.*
-FROM #UniqueFilteredProducts fp
-INNER JOIN #PriceStats ps
-  ON fp.ListPrice >= ps.AvgPrice - 1 * ps.StdDev;
-
--- Explanation: Combine both criteria to exclude outliers and create a temporary table with non-outlier products.
-SELECT fp.*
+-- Step 6: Combine Results to Exclude Outliers
+-- Combine the results from both tails to exclude outliers and keep only products within the acceptable range
+SELECT t1.*
 INTO #NonOutlierProducts
-FROM #UniqueFilteredProducts fp
-INNER JOIN #PriceStats ps
-  ON fp.ListPrice BETWEEN ps.AvgPrice - 1 * ps.StdDev AND ps.AvgPrice + 2 * ps.StdDev;
+FROM #Tail1Products t1
+INNER JOIN #Tail2Products t2
+ON t1.ProductID = t2.ProductID;
 
--- Look at results
-SELECT *
-FROM #NonOutlierProducts;
+-- Display products that are not outliers
+SELECT * FROM #NonOutlierProducts;
 
--- Step: Check for Missing Values
-SELECT *
-FROM #NonOutlierProducts
-WHERE ProductSubcategoryID IS NULL;
-
--- Step: Count of Products by Color
+-- Step 7: Color-Based Insights
+-- Calculate the count of products by color and store in a temporary table
 SELECT Color, COUNT(*) AS ProductCount
+INTO #ProductCountByColor
 FROM #NonOutlierProducts
-GROUP BY Color
-ORDER BY ProductCount DESC;
+GROUP BY Color;
 
--- Step: Average List Price by Color
+-- Calculate the average list price by color and store in a temporary table
 SELECT Color, AVG(ListPrice) AS AvgListPrice
+INTO #AvgPriceByColor
 FROM #NonOutlierProducts
-GROUP BY Color
-ORDER BY AvgListPrice DESC;
+GROUP BY Color;
 
--- Step 4: Aggregated Insights
+-- Join the temporary tables on Color to combine product count and average list price
+SELECT pc.Color, pc.ProductCount, ap.AvgListPrice
+INTO #ColorInsights
+FROM #ProductCountByColor pc
+INNER JOIN #AvgPriceByColor ap
+ON pc.Color = ap.Color;
+
+-- Display color-based insights
+SELECT * FROM #ColorInsights;
+
+-- Step 8: Aggregated Insights
+-- Calculate average list price and product count by subcategory
 SELECT p1.ProductSubcategoryID, 
        AVG(p1.ListPrice) AS AvgListPrice, 
        COUNT(p1.ProductID) AS ProductCount
@@ -113,16 +107,17 @@ INTO #SubcategoryInsights
 FROM #NonOutlierProducts p1
 GROUP BY p1.ProductSubcategoryID;
 
--- Look at results
-SELECT *
-FROM #SubcategoryInsights;
+-- Display subcategory insights
+SELECT * FROM #SubcategoryInsights;
 
--- Step 5: Key Insights
+-- Step 9: Key Insights
+-- Identify the subcategory with the highest average list price
 SELECT TOP 1 ProductSubcategoryID, AvgListPrice, ProductCount
 FROM #SubcategoryInsights
 ORDER BY AvgListPrice DESC;
 
--- Step 6: Distribution Analysis
+-- Step 10: Distribution Analysis
+-- Categorize products into price ranges and store in a temporary table
 SELECT ListPrice,
     CASE 
         WHEN ListPrice < 200 THEN '100-199'
@@ -134,21 +129,25 @@ SELECT ListPrice,
 INTO #DistResults
 FROM #NonOutlierProducts;
 
--- Look at results
-SELECT *
-FROM #DistResults;
+-- Display distribution results
+SELECT * FROM #DistResults;
 
--- Aggregate by price range
+-- Aggregate by price range to count products in each range
 SELECT PriceRange, COUNT(*) AS ProductCount
 FROM #DistResults
 GROUP BY PriceRange
 ORDER BY PriceRange;
 
--- Clean up: Drop temporary tables when done
+-- Clean up: Drop temporary tables when done to free up resources
 DROP TABLE #FilteredProducts;
 DROP TABLE #UniqueFilteredProducts;
 DROP TABLE #PriceStats;
-DROP TABLE #ModePrice;
+DROP TABLE #DeviationRanges;
+DROP TABLE #Tail1Products;
+DROP TABLE #Tail2Products;
 DROP TABLE #NonOutlierProducts;
+DROP TABLE #ProductCountByColor;
+DROP TABLE #AvgPriceByColor;
+DROP TABLE #ColorInsights;
 DROP TABLE #SubcategoryInsights;
 DROP TABLE #DistResults;
