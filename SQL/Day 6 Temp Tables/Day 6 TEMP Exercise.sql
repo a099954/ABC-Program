@@ -1,38 +1,54 @@
 -- Connect to the AdventureWorks2012 database
 USE AdventureWorks2012;
 
--- Exercise: Analyzing Product Data
--- In this exercise, you will perform a series of SQL tasks to analyze product data from the AdventureWorks2012 database.
--- You will use temporary tables to break down the analysis into intermediate steps.
-
 -- Step 1: Data Extraction and Initial Filtering
--- Create a temporary table named #FilteredProducts to store products with a list price greater than $100.
--- Hint: Use the SELECT INTO statement to extract data from the Product table and filter based on the ListPrice column.
+-- Extract raw data into a temporary table and apply initial filtering
+-- We create a temporary table named #FilteredWorkOrders to store work orders for products with a list price greater than $100.
+-- The SELECT INTO statement extracts data from the joined Product and WorkOrder tables and filters it based on the ListPrice column.
+
+
+-- Display the result of Step 1
+
 
 -- Step 2: Creating Intermediate Results
--- Calculate the average list price for each product subcategory and store the results in a temporary table named #AvgListPriceBySubcategory.
--- Hint: Use the AVG() function and GROUP BY clause.
+-- Calculate the average order quantity for each product
+-- In this step, we calculate the average order quantity for each product.
+-- The result is stored in a new temporary table named #AvgOrderQtyByProduct.
+
+
+-- Display the result of Step 2
+
 
 -- Step 3: Further Intermediate Analysis
--- Calculate the total number of products in each subcategory and store the results in a temporary table named #SubcategoryProductCount.
--- Hint: Use the COUNT() function and GROUP BY clause.
+-- Calculate the total number of work orders per product
+-- This step calculates the total number of work orders for each product and stores the results in #ProductWorkOrderCount.
+
+
+-- Display the result of Step 3
+
 
 -- Step 4: Joining Intermediate Results
--- Join the #AvgListPriceBySubcategory and #SubcategoryProductCount tables to combine average list prices and product counts per subcategory.
--- Store the results in a temporary table named #CombinedResults.
--- Hint: Use the INNER JOIN clause.
+-- Join the intermediate results to get average order quantities and work order counts
+-- We join the #AvgOrderQtyByProduct and #ProductWorkOrderCount tables to combine the average order quantities and work order counts per product.
+-- The results are stored in the #CombinedResults temporary table.
+
+
+
+-- Display the result of Step 4
+
 
 -- Step 5: Additional Statistics
--- Calculate the minimum and maximum list prices for each subcategory and store the results in a temporary table named #MinMaxListPriceBySubcategory.
--- Hint: Use the MIN() and MAX() functions along with GROUP BY.
+-- Calculate the minimum and maximum order quantities for each product
+-- This step calculates the minimum and maximum order quantities for each product and stores the results in #MinMaxOrderQtyByProduct.
+
+
+-- Display the result of Step 5
+
 
 -- Step 6: Final Analysis
--- Find the subcategory with the highest average list price.
--- Join the #CombinedResults and #MinMaxListPriceBySubcategory tables to obtain additional statistics.
--- Identify the subcategory with the highest average list price.
--- Hint: Use the TOP 1 and ORDER BY clauses.
+-- Find the product with the highest average order quantity
+-- In the final step, we identify the product with the highest average order quantity.
+-- We join the #CombinedResults and #MinMaxOrderQtyByProduct tables to obtain additional statistics.
+-- The result provides insights into products based on order quantities.
 
--- Clean up: Drop temporary tables when done.
-
--- Your task is to write SQL statements for each step of the exercise.
--- Use the provided hints to guide you. Good luck!
+-- Clean up: Drop temporary tables when done
