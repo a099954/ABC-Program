@@ -45,20 +45,3 @@ USE AdventureWorks2012;
 
 -- Step 3) Order Results
 
-
-
-
-/* Product Tables Exercises - Aggregate INNER JOINS  */
-
--- Question 1) What products have we stocked the highest inventory quantity for over time?
-
--- Step 1) Join the Product table (p) to the ProductInventory table (inv)
--- and return the p.Name AS (Product) and inv.LocationID AS InventoryLocationID
-
-
--- Step 2) Add an Aggregate by taking the SUM of inv.Quantity
--- and group by p.Name
-
-
--- Step 3) Order the results by TotalQuantity
-
