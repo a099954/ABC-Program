@@ -1,7 +1,70 @@
 -- Connect to the AdventureWorks2012 database
 USE AdventureWorks2012;
 
--- Data Preparation and Cleaning
+-- CTEs and Statistical Analysis
+
+-- Step 1: Define CTE for Product and Work Order Data and Display Results
+WITH ProductWorkOrderCTE AS (
+    SELECT 
+        p.ProductID,
+        p.Name AS ProductName,
+        p.ListPrice,
+        p.StandardCost,
+        w.WorkOrderID,
+        w.OrderQty,
+        w.DueDate
+    FROM 
+        Production.Product AS p
+    INNER JOIN 
+        Production.WorkOrder AS w ON p.ProductID = w.ProductID
+)
+SELECT * FROM ProductWorkOrderCTE;
+
+-- Step 2: Filter Products with List Price Greater Than 100 and Display Results
+WITH ProductWorkOrderCTE AS (
+    SELECT 
+        p.ProductID,
+        p.Name AS ProductName,
+        p.ListPrice,
+        p.StandardCost,
+        w.WorkOrderID,
+        w.OrderQty,
+        w.DueDate
+    FROM 
+        Production.Product AS p
+    INNER JOIN 
+        Production.WorkOrder AS w ON p.ProductID = w.ProductID
+)
+SELECT * 
+FROM ProductWorkOrderCTE
+WHERE ListPrice > 100 
+      AND ListPrice IS NOT NULL
+      AND StandardCost IS NOT NULL;
+
+-- Step 3: Calculate and Display Basic Statistics
+WITH ProductWorkOrderCTE AS (
+    SELECT 
+        p.ProductID,
+        p.Name AS ProductName,
+        p.ListPrice,
+        p.StandardCost,
+        w.WorkOrderID,
+        w.OrderQty,
+        w.DueDate
+    FROM 
+        Production.Product AS p
+    INNER JOIN 
+        Production.WorkOrder AS w ON p.ProductID = w.ProductID
+)
+SELECT 
+    AVG(ListPrice) AS AvgPrice, 
+    STDEV(ListPrice) AS StdDev
+FROM ProductWorkOrderCTE
+WHERE ListPrice > 100 
+      AND ListPrice IS NOT NULL
+      AND StandardCost IS NOT NULL;
+
+-- Temporary Tables: Data Preparation and Statistical Analysis
 
 -- Step 1: Data Extraction
 -- Create a temporary table to store the joined results including StandardCost
